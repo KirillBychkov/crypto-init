@@ -1,0 +1,20 @@
+{
+  "name": "init-service",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cron": "^3.1.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "got": "^14.4.2",
+    "mongoose": "^8.6.3"
+  }
+}
