@@ -12,7 +12,7 @@ export class AppController {
     if(req.query.sorted)
       sort = req.query.sorted.split(':')
 
-    const total = await Coin.countDocuments(query).exec()
+    const total = await Coin.countDocuments(query).exec();
     let coins = Coin.find(query, { fullText: 0 }, pagination);
 
     if(!!req.query.sorted && typeof sort[0] === 'string' && typeof +sort[1] === 'number') {
