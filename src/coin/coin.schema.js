@@ -1,14 +1,8 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema } from "mongoose";
 
-// todo: schema validation
 const CoinSchema = new Schema({
-  slug: { type: String, required: true, unique: true },
-  markets: [{
-    marketPair: { type: String, required: true },
-    exchangeName: { type: String, required: true },
-    volumeUsd: { type: Number, required: true },
-    quoteSymbol: { type: String, required: true },
-  }],
-});
+  markets: Array,
+  isChecked: Boolean
+}, { strict: false });
 
 export const Coin = model('Coin', CoinSchema);
