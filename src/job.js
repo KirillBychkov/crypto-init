@@ -7,6 +7,8 @@ export async function syncEveryCoin(allCoins, status) {
   if(coin) {
     const marketData = await fetchMarketData(coin.slug);
     await coinService.saveCoinsData(marketData.data.marketPairs, coin.slug);
+
+    console.log(status.current + ') ' + coin.slug + ' data saved to MongoDB. List length ' + status.max);
   }
 
   if(status.max > status.current) {

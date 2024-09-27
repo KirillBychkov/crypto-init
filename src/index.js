@@ -10,8 +10,8 @@ let status = { process: false, max: 0, current: 0, interval: null  };
 const operation = async () => {
   status.process = true;
   await Coin.collection.drop();
-  // const allCoins = (await fetchAllCoins()).slice(0, 10);
-  const allCoins = await fetchAllCoins();
+  const allCoins = (await fetchAllCoins()).slice(0, 20);
+  // const allCoins = await fetchAllCoins();
   const coinsData = allCoins.map((e) => ({ ...e, markets: [], isChecked: false } ));
   await coinService.initialSave(coinsData);
 
