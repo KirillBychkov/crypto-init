@@ -16,7 +16,7 @@ export class CoinService {
     try {
       await Coin.findOneAndUpdate(
         { slug },
-        { markets: coinData, isChecked: true },
+        { markets: coinData, isChecked: !!coinData.length },
         { upsert: true, new: true }
       );
     } catch (error) {
