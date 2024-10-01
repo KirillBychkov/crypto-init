@@ -6,7 +6,7 @@ export async function syncEveryCoin(allCoins, status) {
   const coin = allCoins[status.current];
   if(coin) {
     const marketData = await fetchMarketData(coin.slug);
-    await coinService.saveCoinsData(marketData.data.marketPairs.map(({
+    const data = marketData.data.marketPairs.map(({
       baseCurrencyId,
       baseSymbol,
       category,
@@ -34,8 +34,11 @@ export async function syncEveryCoin(allCoins, status) {
       quoteSymbol,
       marketReputation,
       type
-    })), coin.slug);
+    }));
+    await coinService.saveCoinsData(data, coin.slug);
 
+    console.log(coin)
+    console.log(data.length)
     console.log(status.current + ') ' + coin.slug + ' data processed. List length ' + status.max);
   }
 

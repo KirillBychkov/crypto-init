@@ -1,4 +1,5 @@
 import express, { json } from "express";
+import cors from "cors";
 import { controller } from "./controller/app.controller.js";
 import { syncEveryCoin } from "./job.js";
 import { connect } from "./db/connections.js";
@@ -13,16 +14,18 @@ const operation = async () => {
   // const allCoins = (await fetchAllCoins()).slice(0, 20);
   const allCoins = await fetchAllCoins();
   const coinsData = allCoins.map((e) => ({ ...e, markets: [], isChecked: false } ));
-  await coinService.initialSave(coinsData);
-
-  status.interval = setInterval(() => syncEveryCoin(allCoins, status), 500);
+  coinService.initialSave(coinsData).then(() => {
+    status.interval = setInterval(() => syncEveryCoin(allCoins, status), 500);
+  });
 };
 
 // Server
 const app = express();
 app.use(json());
+app.use(cors());
 app.get('/coins', controller.getAllCoins.bind(controller));
 app.get('/slugs', controller.getAllSlugs.bind(controller));
+
 app.post('/refresh', (req, res) => {
   if(!status.process) operation().then(() => {});
 
@@ -37,5 +40,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, async () => {
   await connect();
   console.log(`Server running at http://localhost:${port}`);
-  await operation();
+  // await operation();
 });
